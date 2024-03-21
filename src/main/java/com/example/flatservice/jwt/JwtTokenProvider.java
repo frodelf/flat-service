@@ -1,6 +1,6 @@
 package com.example.flatservice.jwt;
 
-import com.example.userservice.exception.InvalidTokenException;
+import com.example.flatservice.exception.InvalidTokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
