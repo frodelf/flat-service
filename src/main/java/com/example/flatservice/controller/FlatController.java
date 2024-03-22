@@ -3,60 +3,75 @@ package com.example.flatservice.controller;
 import com.example.flatservice.dto.FlatDtoForAdd;
 import com.example.flatservice.dto.FlatDtoForFilter;
 import com.example.flatservice.dto.FlatDtoForViewAll;
-import com.example.flatservice.entity.enums.StatusState;
-import com.example.flatservice.service.FlatService;
-import com.example.flatservice.validator.FlatValidator;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
-@RestController
-@RequiredArgsConstructor
-@RequestMapping("/api/v1/flat")
-public class FlatController {
-    private final FlatService flatService;
-    private final FlatValidator flatValidator;
-    @GetMapping("/admin/get-all/{corpsId}")
-    public ResponseEntity<Page<FlatDtoForViewAll>> getAllForAdminByCorpId(@RequestParam Integer page, @RequestParam Integer pageSize, @PathVariable Long corpsId){
-        return ResponseEntity.ok(flatService.getAllForAdminByCorpId(page, pageSize, corpsId));
-    }
-    @GetMapping("/get-all-for-consumer")
-    public ResponseEntity<Page<FlatDtoForViewAll>> getAllForConsumer(@ModelAttribute FlatDtoForFilter flatDtoForFilter){
-        return ResponseEntity.ok(flatService.getAllForCustomer(flatDtoForFilter));
-    }
-    @PutMapping("/admin/delete/{flatId}")
-    public ResponseEntity<String> deleteById(@PathVariable Long flatId){
-        flatService.changeStatus(flatId, StatusState.DELETED);
-        return ResponseEntity.ok("deleted");
-    }
-    @PutMapping("/admin/rejected/{flatId}")
-    public ResponseEntity<String> rejectedById(@PathVariable Long flatId){
-        flatService.changeStatus(flatId, StatusState.REJECTED);
-        return ResponseEntity.ok("changed");
-    }
-    @PutMapping("/admin/approved/{flatId}")
-    public ResponseEntity<String> approvedById(@PathVariable Long flatId){
-        flatService.changeStatus(flatId, StatusState.APPROVED);
-        return ResponseEntity.ok("changed");
-    }
-    @PostMapping("/add")
-    public ResponseEntity<Map<String, String>> add(@ModelAttribute @Valid FlatDtoForAdd flatDtoForAdd, BindingResult bindingResult) throws IOException {
-        flatValidator.validate(flatDtoForAdd, bindingResult);
-        Map<String, String> errorsMap = new HashMap<>();
-        if (bindingResult.hasErrors()) {
-            bindingResult.getFieldErrors().forEach(error -> errorsMap.put(error.getField(), error.getDefaultMessage()));
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorsMap);
-        }
-        flatService.add(flatDtoForAdd);
-        return ResponseEntity.ok().body(Collections.singletonMap("status", "saved"));
-    }
+@Tag(name = "Flat controller", description = "Flat API")
+public interface FlatController {
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all flats for admin panel by corps id")
+    ResponseEntity<Page<FlatDtoForViewAll>> getAllForAdminByCorpId(@Parameter(description = "Page for pagination") @RequestParam Integer page, @Parameter(description = "Page size for page numbering") @RequestParam Integer pageSize, @Parameter(description = "Corps id for filtering") @PathVariable Long corpsId);
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all flats with filtering for customer part")
+    ResponseEntity<Page<FlatDtoForViewAll>> getAllForConsumer(@RequestBody(description = "DTO for filtering flats") @ModelAttribute FlatDtoForFilter flatDtoForFilter);
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to delete flat by id")
+    ResponseEntity<String> deleteById(@Parameter(description = "Flat id by which flat will be deleted") @PathVariable Long flatId);
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to reject flat by id")
+    ResponseEntity<String> rejectedById(@Parameter(description = "Flat id by which flat will be rejected") @PathVariable Long flatId);
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to approve flat by id")
+    ResponseEntity<String> approvedById(@Parameter(description = "Flat id by which flat will be approved") @PathVariable Long flatId);
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @ApiResponse(responseCode = "403", description = "Forbidden"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to add flat")
+    ResponseEntity<Map<String, String>> add(@RequestBody(description = "DTO for adding/updating to building") @ModelAttribute @Valid FlatDtoForAdd flatDtoForAdd, BindingResult bindingResult) throws IOException;
 }

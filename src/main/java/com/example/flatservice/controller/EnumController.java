@@ -1,145 +1,124 @@
 package com.example.flatservice.controller;
 
-import com.example.flatservice.entity.enums.*;
-import lombok.RequiredArgsConstructor;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
 import java.util.Map;
 
-@RestController
-@RequiredArgsConstructor
-@RequestMapping("/api/v1/enum")
-public class EnumController {
-    @GetMapping("/appointment")
-    public ResponseEntity<Map<String, String>> getAllAppointment(){
-        Map<String, String> result = new HashMap<>();
-        for (Appointment appointment : Appointment.values()) {
-            result.put(appointment.name(), appointment.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/construction-technologies")
-    public ResponseEntity<Map<String, String>> getConstructionTechnologies(){
-        Map<String, String> result = new HashMap<>();
-        for (ConstructionTechnologies value : ConstructionTechnologies.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/electricity")
-    public ResponseEntity<Map<String, String>> getElectricity(){
-        Map<String, String> result = new HashMap<>();
-        for (Electricity value : Electricity.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/foundation-document")
-    public ResponseEntity<Map<String, String>> getFoundationDocument(){
-        Map<String, String> result = new HashMap<>();
-        for (FoundationDocument value : FoundationDocument.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/gas")
-    public ResponseEntity<Map<String, String>> getGas(){
-        Map<String, String> result = new HashMap<>();
-        for (Gas value : Gas.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/heating")
-    public ResponseEntity<Map<String, String>> getHeating(){
-        Map<String, String> result = new HashMap<>();
-        for (Heating value : Heating.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/layout")
-    public ResponseEntity<Map<String, String>> getLayout(){
-        Map<String, String> result = new HashMap<>();
-        for (Layout value : Layout.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/level")
-    public ResponseEntity<Map<String, String>> getLevel(){
-        Map<String, String> result = new HashMap<>();
-        for (Level value : Level.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/living-condition")
-    public ResponseEntity<Map<String, String>> getLivingCondition(){
-        Map<String, String> result = new HashMap<>();
-        for (LivingCondition value : LivingCondition.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/sewage")
-    public ResponseEntity<Map<String, String>> getSewage(){
-        Map<String, String> result = new HashMap<>();
-        for (Sewage value : Sewage.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/status-building")
-    public ResponseEntity<Map<String, String>> getStatusBuilding(){
-        Map<String, String> result = new HashMap<>();
-        for (StatusBuilding value : StatusBuilding.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/status-state")
-    public ResponseEntity<Map<String, String>> getStatusState(){
-        Map<String, String> result = new HashMap<>();
-        for (StatusState value : StatusState.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/status-user")
-    public ResponseEntity<Map<String, String>> getStatusUser(){
-        Map<String, String> result = new HashMap<>();
-        for (StatusUser value : StatusUser.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/territory")
-    public ResponseEntity<Map<String, String>> getTerritory(){
-        Map<String, String> result = new HashMap<>();
-        for (Territory value : Territory.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/type-building")
-    public ResponseEntity<Map<String, String>> getTypeBuilding(){
-        Map<String, String> result = new HashMap<>();
-        for (TypeBuilding value : TypeBuilding.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
-    @GetMapping("/water-supply")
-    public ResponseEntity<Map<String, String>> getWaterSupply(){
-        Map<String, String> result = new HashMap<>();
-        for (WaterSupply value : WaterSupply.values()) {
-            result.put(value.name(), value.name());
-        }
-        return ResponseEntity.ok(result);
-    }
+@Tag(name = "Enum controller", description = "Enum API")
+public interface EnumController {
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all appointments for select")
+    ResponseEntity<Map<String, String>> getAllAppointment();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all construction technologies for select")
+    ResponseEntity<Map<String, String>> getConstructionTechnologies();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all electricities for select")
+    ResponseEntity<Map<String, String>> getElectricity();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all foundation documents for select")
+    ResponseEntity<Map<String, String>> getFoundationDocument();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all gases for select")
+    ResponseEntity<Map<String, String>> getGas();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all heats for select")
+    ResponseEntity<Map<String, String>> getHeating();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all layout for select")
+    ResponseEntity<Map<String, String>> getLayout();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all levels for select")
+    ResponseEntity<Map<String, String>> getLevel();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all living conditions for select")
+    ResponseEntity<Map<String, String>> getLivingCondition();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all sewage for select")
+    ResponseEntity<Map<String, String>> getSewage();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all status building for select")
+    ResponseEntity<Map<String, String>> getStatusBuilding();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all status state for select")
+    ResponseEntity<Map<String, String>> getStatusState();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all status user for select")
+    ResponseEntity<Map<String, String>> getStatusUser();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all territory for select")
+    ResponseEntity<Map<String, String>> getTerritory();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all type building for select")
+    ResponseEntity<Map<String, String>> getTypeBuilding();
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "400", description = "Invalid input data"),
+            @ApiResponse(responseCode = "404", description = "Resource not found."),
+    })
+    @Operation(summary = "The request to get all water supply for select")
+    ResponseEntity<Map<String, String>> getWaterSupply();
 }

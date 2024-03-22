@@ -26,6 +26,7 @@ public class SecurityFilterConfig {
                                 .requestMatchers("/api/v1/flat/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/v1/flat/add").hasAnyRole("NOTARY", "ADMIN")
                                 .requestMatchers("/api/v1/flat/**").authenticated()
+                                .requestMatchers("/api/v1/enum/**").authenticated()
                                 .anyRequest().permitAll();
                         })
                 .addFilterAfter(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
